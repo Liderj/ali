@@ -32,6 +32,7 @@
   "main": "app",
   "scripts": {
     "start": "node app",
+    "pro": "NODE_ENV=production pm2 start app",
     "dev": "NODE_ENV=development nodemon --quiet | bunyan",
     "test": "NODE_ENV=test jest --forceExit --verbose",
     "test:unit": "npm test -- test/unit",
