@@ -1,11 +1,9 @@
-'use strict';
+"use strict";
 
-const Router = require('koa-router');
-const homeController = require('./controllers/home');
-
+const Router = require("koa-router");
+const homeController = require("./controllers/home");
 
 const router = new Router();
-router.get('/', homeController.welcome);
-router.get('/spec', homeController.showSwaggerSpec);
+router.get("/", homeController.welcome);
 
 module.exports = router;

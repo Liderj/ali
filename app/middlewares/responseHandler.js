@@ -1,25 +1,25 @@
-'use strict';
+"use strict";
 
 /**
- * HTTP Status codes
+ * \HTTP Status codes
  */
 const statusCodes = {
-  CONTINUE: 100,
-  OK: 200,
-  CREATED: 201,
-  ACCEPTED: 202,
-  NO_CONTENT: 204,
-  BAD_REQUEST: 400,
-  UNAUTHORIZED: 401,
-  FORBIDDEN: 403,
-  NOT_FOUND: 404,
-  REQUEST_TIMEOUT: 408,
-  UNPROCESSABLE_ENTITY: 422,
-  INTERNAL_SERVER_ERROR: 500,
-  NOT_IMPLEMENTED: 501,
-  BAD_GATEWAY: 502,
-  SERVICE_UNAVAILABLE: 503,
-  GATEWAY_TIME_OUT: 504
+  CONTINUE: 100, //客户端继续请求
+  OK: 200, //请求成功正常响应
+  CREATED: 201, //请求已完成，创建新资源
+  ACCEPTED: 202, //已接受请求，等待接受处理
+  NO_CONTENT: 204, //请求已处理，无返回内容
+  BAD_REQUEST: 400, //请求错误
+  UNAUTHORIZED: 401, //拒绝访问
+  FORBIDDEN: 403, //资源不可用
+  NOT_FOUND: 404, //请求未找到
+  REQUEST_TIMEOUT: 408, //在许可的等待时间内，客户端为发出任何请求
+  UNPROCESSABLE_ENTITY: 422, //语义错误，无法响应请求
+  INTERNAL_SERVER_ERROR: 500, //服务器错误
+  NOT_IMPLEMENTED: 501, //服务器不支持实现请求所需功能
+  BAD_GATEWAY: 502, //上游服务器收到无效的响应
+  SERVICE_UNAVAILABLE: 503, //服务不可用
+  GATEWAY_TIME_OUT: 504 //网关错误
 };
 
 function responseHandler() {
@@ -29,21 +29,21 @@ function responseHandler() {
 
     ctx.res.success = (data = null, message = null) => {
       ctx.status = ctx.status < 400 ? ctx.status : statusCodes.OK;
-      ctx.body = { status: 'success', data, message };
+      ctx.body = { status: "success", data, message };
     };
 
     ctx.res.fail = (code = null, message = null, data = null) => {
-      ctx.status = ctx.status >= 400 && ctx.status < 500
-        ? ctx.status
-        : statusCodes.BAD_REQUEST;
-      ctx.body = { status: 'fail', code, data, message };
+      ctx.status =
+        ctx.status >= 400 && ctx.status < 500
+          ? ctx.status
+          : statusCodes.BAD_REQUEST;
+      ctx.body = { status: "fail", code, data, message };
     };
 
     ctx.res.error = (code = null, message = null, data = null) => {
-      ctx.status = ctx.status < 500
-        ? statusCodes.INTERNAL_SERVER_ERROR
-        : ctx.status;
-      ctx.body = { status: 'error', code, data, message };
+      ctx.status =
+        ctx.status < 500 ? statusCodes.INTERNAL_SERVER_ERROR : ctx.status;
+      ctx.body = { status: "error", code, data, message };
     };
 
     ctx.res.ok = (data, message) => {
