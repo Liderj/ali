@@ -4,6 +4,6 @@ const Router = require("koa-router");
 const homeController = require("./controllers/home");
 
 const router = new Router();
-router.get("/", homeController.welcome);
+router.get("/duitang/list", homeController.list);
 
 module.exports = router;

@@ -43,6 +43,7 @@
     "lint:test": "eslint test"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "bunyan": "^1.8.12",
     "dotenv": "^5.0.1",
     "kcors": "^2.2.1",

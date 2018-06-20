@@ -1,7 +1,6 @@
-'use strict';
+"use strict";
 
-const { UNKNOWN_ENDPOINT, UNKNOWN_ERROR } = require('../constants/error');
-
+const { UNKNOWN_ENDPOINT, UNKNOWN_ERROR } = require("../constants/error");
 
 /**
  * Return middleware that handle exceptions in Koa.
@@ -21,7 +20,7 @@ function errorHandler() {
       ctx.res.internalServerError(UNKNOWN_ERROR.code, UNKNOWN_ERROR.message);
       // Recommended for centralized error reporting,
       // retaining the default behaviour in Koa
-      ctx.app.emit('error', err, ctx);
+      ctx.app.emit("error", err, ctx);
     }
   };
 }
