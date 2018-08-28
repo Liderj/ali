@@ -55,6 +55,7 @@
   },
   "devDependencies": {
     "coveralls": "^3.0.0",
+    "cz-conventional-changelog": "^2.1.0",
     "eslint": "^4.19.1",
     "eslint-config-omnious": "^0.4.0",
     "jest": "^22.4.3",
@@ -64,5 +65,10 @@
   },
   "jest": {
     "testEnvironment": "node"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

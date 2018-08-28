@@ -3,16 +3,19 @@
 "use strict";
 
 const config = require("./config");
-
 const Koa = require("koa");
-const bodyParser = require("koa-bodyparser");
 const cors = require("kcors");
+const bodyParser = require("koa-bodyparser");
 const errorHandler = require("./middlewares/errorHandler");
 const logMiddleware = require("./middlewares/log");
 const logger = require("./logger");
 const requestId = require("./middlewares/requestId");
 const responseHandler = require("./middlewares/responseHandler");
+
+
 const router = require("./routes");
+const admin = require("./admin/admin-router");
+
 
 const app = new Koa();
 
@@ -39,8 +42,10 @@ app.use(responseHandler());
 app.use(errorHandler());
 app.use(logMiddleware({ logger }));
 
-// Bootstrap application router
+// api路由
 app.use(router.routes());
+// 后台路由
+app.use(admin.routes());
 app.use(router.allowedMethods());
 
 function onError(err) {
