@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 
 "use strict";
+const path = require("path")
+
 
 const config = require("./config");
 const Koa = require("koa");
@@ -11,13 +13,16 @@ const logMiddleware = require("./middlewares/log");
 const logger = require("./logger");
 const requestId = require("./middlewares/requestId");
 const responseHandler = require("./middlewares/responseHandler");
-
+const serve = require('koa-static')
+const views = require('koa-views')
 
 const router = require("./routes");
 const admin = require("./admin/admin-router");
-
+const mongoose = require('mongoose')
+mongoose.connect(config.mongodb)
 
 const app = new Koa();
+
 
 // Trust proxy
 app.proxy = true;
@@ -42,6 +47,13 @@ app.use(responseHandler());
 app.use(errorHandler());
 app.use(logMiddleware({ logger }));
 
+
+app.use(serve(
+  path.join(__dirname+'/public')
+))
+app.use(views(__dirname+'/admin/views'), {
+  extension: 'nunjucks'
+})
 // api路由
 app.use(router.routes());
 // 后台路由

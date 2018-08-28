@@ -50,6 +50,9 @@
     "koa": "^2.5.0",
     "koa-bodyparser": "^4.2.0",
     "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
+    "koa-views": "^6.1.4",
+    "mongoose": "^5.2.10",
     "swagger-jsdoc": "^1.9.7",
     "uuid": "^3.2.1"
   },
