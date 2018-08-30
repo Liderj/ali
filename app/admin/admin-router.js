@@ -7,5 +7,7 @@ const admin = new Router({
   prefix: "/admin"
 });
 admin.get("/", Login.index);
+admin.post("/", Login.login);
+
 
 module.exports = admin;

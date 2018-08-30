@@ -33,10 +33,6 @@ function responseHandler() {
     };
 
     ctx.res.fail = (code = null, message = null, data = null) => {
-      ctx.status =
-        ctx.status >= 400 && ctx.status < 500
-          ? ctx.status
-          : statusCodes.BAD_REQUEST;
       ctx.body = { status: "fail", code, data, message };
     };
 
@@ -50,7 +46,10 @@ function responseHandler() {
       ctx.status = statusCodes.OK;
       ctx.res.success(data, message);
     };
-
+    ctx.res.ajaxReq = (message) => {
+      ctx.status = statusCodes.OK;
+      ctx.res.fail(400,message,null);
+    };
     ctx.res.created = (data, message) => {
       ctx.status = statusCodes.CREATED;
       ctx.res.success(data, message);

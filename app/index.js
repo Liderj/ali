@@ -35,6 +35,8 @@ app.use(
     jsonLimit: "10mb"
   })
 );
+
+
 app.use(requestId());
 app.use(
   cors({
@@ -43,17 +45,14 @@ app.use(
     exposeHeaders: ["X-Request-Id"]
   })
 );
+
+app.use(serve(path.join(__dirname, './public')))
+app.use(views(path.join(__dirname, '/admin/views'), {
+  map: { html: 'nunjucks' }
+}))
 app.use(responseHandler());
 app.use(errorHandler());
 app.use(logMiddleware({ logger }));
-
-
-app.use(serve(
-  path.join(__dirname+'/public')
-))
-app.use(views(__dirname+'/admin/views'), {
-  extension: 'nunjucks'
-})
 // api路由
 app.use(router.routes());
 // 后台路由
