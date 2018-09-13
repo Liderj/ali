@@ -14,16 +14,23 @@ const logger = require("./logger");
 const requestId = require("./middlewares/requestId");
 const responseHandler = require("./middlewares/responseHandler");
 const serve = require('koa-static')
-const views = require('koa-views')
-
+const koaNunjucks = require('koa-nunjucks-2');
+const session = require('koa-session')
 const router = require("./routes");
-const admin = require("./admin/admin-router");
+const admin = require("./admin/adminRouter");
 const mongoose = require('mongoose')
 mongoose.connect(config.mongodb)
 
 const app = new Koa();
 
-
+app.keys = ['lider']
+app.use(async (ctx, next) => {
+  try {
+    await next();
+  } catch (e) {
+    console.log(e)
+  }
+});
 // Trust proxy
 app.proxy = true;
 
@@ -36,7 +43,6 @@ app.use(
   })
 );
 
-
 app.use(requestId());
 app.use(
   cors({
@@ -46,10 +52,21 @@ app.use(
   })
 );
 
+app.use(session({
+  key: config.session.key,
+  maxAge: config.session.maxAge
+}, app))
+
+
 app.use(serve(path.join(__dirname, './public')))
-app.use(views(path.join(__dirname, '/admin/views'), {
-  map: { html: 'nunjucks' }
-}))
+
+app.use(koaNunjucks({
+  ext: 'njk',
+  path: path.join(__dirname, './admin/views'),
+  nunjucksConfig: {
+    trimBlocks: true
+  }
+}));
 app.use(responseHandler());
 app.use(errorHandler());
 app.use(logMiddleware({ logger }));

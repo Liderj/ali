@@ -29,6 +29,7 @@ function responseHandler() {
 
     ctx.res.success = (data = null, message = null) => {
       ctx.status = ctx.status < 400 ? ctx.status : statusCodes.OK;
+      
       ctx.body = { status: "success", data, message };
     };
 

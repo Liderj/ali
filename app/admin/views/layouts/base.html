@@ -16,11 +16,13 @@
 
 </head>
 <body>
-    {% include "views/layout/header.html" %}
-    {% include "views/layout/nav.html" %}
+    {% include "./header.html" %}
+    {% include "./nav.html" %}
+    <div class="page-content">
     {% block body %}
       <div>No body</div>
     {% endblock %}
+   </div>
     
 </body>
 </html>
