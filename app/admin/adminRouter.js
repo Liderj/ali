@@ -13,6 +13,6 @@ admin.post("/login", Login.login);
 admin.get('/logout', Login.logout)
 admin.get('/home',Home.index)
 
-
+admin.get('/post',Post.index)
 admin.post('/post',Post.create)
 module.exports = admin;

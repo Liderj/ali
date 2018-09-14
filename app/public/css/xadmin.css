@@ -286,9 +286,9 @@ xblock{
 .left-nav{
     position: absolute;
     top: 46px;
-    bottom: 42px;
+    bottom: 0px;
     left: 0;
-    z-index: 2;
+    z-index: 1;
     padding-top: 10px;
     background-color: #EEEEEE;
     width: 220px;
@@ -424,7 +424,8 @@ xblock{
 }
 .page-content .layui-tab-content{
     position: absolute;
-    top: 36px;
+    top: 10px;
+    left: 10px;
     bottom: 0px;
     width: 100%;
     background: #fff url() 0 0 no-repeat;

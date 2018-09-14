@@ -18,6 +18,9 @@ const koaNunjucks = require('koa-nunjucks-2');
 const session = require('koa-session')
 const router = require("./routes");
 const admin = require("./admin/adminRouter");
+const loginStatus = require("./middlewares/loginStatus")
+
+
 const mongoose = require('mongoose')
 mongoose.connect(config.mongodb)
 
@@ -70,11 +73,13 @@ app.use(koaNunjucks({
 app.use(responseHandler());
 app.use(errorHandler());
 app.use(logMiddleware({ logger }));
+app.use(loginStatus())
 // api路由
 app.use(router.routes());
 // 后台路由
 app.use(admin.routes());
 app.use(router.allowedMethods());
+
 
 function onError(err) {
   logger.error({ err, event: "error" }, "Unhandled exception occured");

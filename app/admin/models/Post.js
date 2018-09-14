@@ -8,7 +8,7 @@ const PostSchema = new Schema({
     unique:true
   },
   created:{
-    type:Date,
+    type:String,
     default:Date.now,
   },
   content:String,

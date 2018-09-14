@@ -1,0 +1,53 @@
+{% extends "layouts/base.html" %}
+{% block cssblock %}
+<link rel="stylesheet" href="/lib/markdown/simplemde.min.css">
+{% endblock %}
+{% block body %}
+<div class="layui-form" style="width: 80%;">
+  <div class="layui-form-item">
+    <label class="layui-form-label">输入框</label>
+    <div class="layui-input-block">
+      <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item layui-form-text">
+    <label class="layui-form-label">文本域</label>
+    <div class="layui-input-block">
+      <textarea id="MD" name="content" placeholder="请输入内容" class="layui-textarea"></textarea>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn" onclick="submit()">立即提交</button>
+    </div>
+  </div>
+  <div id='show'></div>
+</div>
+{% endblock %}
+{% block scriptblock %}
+ <script src="/lib/markdown/simplemde.min.js"></script>
+ <script>
+var simplemde = new SimpleMDE({ element: $("#MD")[0] });
+function submit (){
+  var postval = {
+    title:$("input[name='title']").val(),
+    content:simplemde.markdown(simplemde.value())
+  }
+  $.post('/admin/post',postval, function (res) {
+        console.log(res);
+        $('#show').html(res.data.content)
+        return false
+     })
+}
+// layui.use('form', function () {
+//     var form = layui.form;
+//     //监听提交
+//     form.on('submit(save)', function (data) {
+//       $.post('/admin/post', data.field, function (res) {
+//         console.log(res);
+//       })
+//       return false
+//     });
+//   });
+</script>
+{% endblock %}
