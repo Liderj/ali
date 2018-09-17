@@ -14,5 +14,7 @@ admin.get('/logout', Login.logout)
 admin.get('/home',Home.index)
 
 admin.get('/post',Post.index)
-admin.post('/post',Post.create)
+admin.all('/post/create',Post.create)
+admin.get('/post/:id',Post.getPost)
+
 module.exports = admin;

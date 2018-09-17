@@ -33,8 +33,7 @@ function submit (){
     title:$("input[name='title']").val(),
     content:simplemde.markdown(simplemde.value())
   }
-  $.post('/admin/post',postval, function (res) {
-        console.log(res);
+  $.post('/admin/post/create',postval, function (res) {
         $('#show').html(res.data.content)
         return false
      })
