@@ -25,9 +25,9 @@
       <td>{{post.created}}</td>
       <td class="td-manage">
         <a title="编辑" onclick="showPost('{{post._id}}')">
-          <i class="layui-icon">&#xe642;</i>
+          <i class="layui-icon">&#xe63c;</i>
         </a>
-        <a title="删除">
+        <a title="删除"  onclick="deletePost('{{post._id}}')">
           <i class="layui-icon">&#xe640;</i>
         </a>
       </td>
@@ -56,6 +56,13 @@
           content:'<div class="markdown" style="padding:15px">'+res.data.content+'</div>'   
         });
       }
+    })
+  }
+  function deletePost(id){
+    var node = $(event.target).parents('tr')
+     $.get('/admin/post/delete/' + id, function (res) {
+      layer.msg(res.message);
+      !res.code&& node.remove()
     })
   }
 </script>

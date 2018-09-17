@@ -433,8 +433,9 @@ xblock{
     overflow: hidden;
 }
 .page-content .layui-tab-content .layui-tab-item{
-    width: 100%;
+    width: 95%;
     height: 100%;
+    padding: 0 10px;
     overflow: scroll;
 }
 .page-content .layui-tab-content .layui-tab-item iframe{

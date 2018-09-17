@@ -1,8 +1,12 @@
 const Post = require('../models/Post')
 const xss = require('xss');
+const moment = require('moment')
 module.exports ={
   async index (ctx){
     let posts =await Post.find()
+    posts.forEach(e=>{
+      e.created = moment().format('YYYY-MM-DD,h:mm:ss')
+    })
     return ctx.render('post',{posts})
   },
 
@@ -29,5 +33,9 @@ module.exports ={
     } catch (error) {
         return ctx.res.ajaxReq(error.message);
     }
+  },
+  async delete(ctx){
+    let post = await   Post.deleteOne({_id:ctx.params.id})
+    ctx.res.success(post, '删除成功');
   }
 }
