@@ -5,7 +5,7 @@ module.exports ={
   async index (ctx){
     let posts =await Post.find()
     posts.forEach(e=>{
-      e.created = moment().format('YYYY-MM-DD,h:mm:ss')
+      e.created = moment().format('YYYY-MM-DD,hh:mm:ss')
     })
     return ctx.render('post',{posts})
   },
