@@ -31,7 +31,8 @@ var simplemde = new SimpleMDE({ element: $("#MD")[0] });
 function submit (){
   var postval = {
     title:$("input[name='title']").val(),
-    content:simplemde.markdown(simplemde.value())
+    content:simplemde.markdown(simplemde.value()),
+    mdcontent:simplemde.value()
   }
   $.post('/admin/post/create',postval, function (res) {
         $('#show').html(res.data.content)

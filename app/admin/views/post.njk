@@ -1,6 +1,7 @@
 {% extends "layouts/base.html" %}
 {% block cssblock %}
 <link rel="stylesheet" href="/css/markdown.css">
+<link rel="stylesheet" href="/lib/markdown/simplemde.min.css">
 {% endblock %}
 {% block body %}
 <table class="layui-table">
@@ -27,6 +28,9 @@
         <a title="编辑" onclick="showPost('{{post._id}}')">
           <i class="layui-icon">&#xe63c;</i>
         </a>
+        <a title="修改" onclick="openEditDialgo('{{post._id}}')">
+          <i class="layui-icon">&#xe655;</i>
+        </a>
         <a title="删除"  onclick="deletePost('{{post._id}}')">
           <i class="layui-icon">&#xe640;</i>
         </a>
@@ -37,14 +41,37 @@
     {% endfor %}
   </tbody>
 </table>
+
 {% endblock %}
 {% block scriptblock %}
+<div class="layui-form" id="postEdit" data-id="" style="display:none;padding:20px 20px 20px 0;">
+  <div class="layui-form-item">
+    <label class="layui-form-label">输入框</label>
+    <div class="layui-input-block">
+      <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item layui-form-text">
+    <label class="layui-form-label">文本域</label>
+    <div class="layui-input-block">
+      <textarea id="MD" name="content" placeholder="请输入内容" class="layui-textarea"></textarea>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn" onclick="submit()">立即提交</button>
+    </div>
+  </div>
+  <div id='show'></div>
+</div>
+ <script src="/lib/markdown/simplemde.min.js"></script>
 <script>
   $(function () {
     layui.use('layer', function () {
       var layer = layui.layer;
     })
   })
+  var simplemde = null,dialog =null
   function showPost(id) {
     $.get('/admin/post/' + id, function (res) {
       if (res.code != 400) {
@@ -54,6 +81,33 @@
           area:['375px','667px'],
           offset:'60px',
           content:'<div class="markdown" style="padding:15px">'+res.data.content+'</div>'   
+        });
+      }
+    })
+  }
+  function submit(){
+    var postValue = {
+      title:$("input[name='title']").val(),
+      content:simplemde.markdown(simplemde.value()),
+      mdcontent:simplemde.value()
+    }
+    $.post('/admin/post/edit/'+ $('#postEdit').attr('data-id'),postValue,function(res){
+         layer.close(layer.index)
+    })
+  }
+  function openEditDialgo(id){
+    $('#postEdit').attr('data-id',id)
+    simplemde = null
+    $.get('/admin/post/' + id, function (res) {
+      if (res.code != 400) {
+        simplemde = new SimpleMDE({ element: $("#MD")[0] });
+        simplemde.value(res.data.mdcontent)
+        $("input[name='title']").val(res.data.title)
+        var dialog = layer.open({
+          type: 1,
+          title:"修改文章",
+          area: ['80%','80vh'],
+          content:$('#postEdit')
         });
       }
     })

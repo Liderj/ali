@@ -17,6 +17,8 @@ admin.get('/post',Post.index)
 admin.all('/post/create',Post.create)
 admin.get('/post/:id',Post.getPost)
 admin.get('/post/delete/:id',Post.delete)
+admin.post('/post/edit/:id',Post.editPost)
+
 
 
 module.exports = admin;
